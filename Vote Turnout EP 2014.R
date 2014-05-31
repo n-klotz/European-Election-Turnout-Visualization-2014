@@ -100,6 +100,11 @@ map <- readShapeSpatial("shapefile/CNTR_RG_60M_2006", proj4string = CRS("+proj=l
 map@data$id <- rownames(map@data)
 map.points <- fortify(map, region = "id")
 map.df <- join(map.points, map@data, by = "id")
+# change factor levels that are not ISO2 (Greece!)
+turnout$CNTR_ID <- as.character(turnout$CNTR_ID)
+turnout$CNTR_ID[turnout$CNTR_ID=="EL"] <- "GR"
+turnout$CNTR_ID <- as.factor(turnout$CNTR_ID)
+
 map.df <- join(map.df, turnout, by = "CNTR_ID")
 
 # Plot skeleton
