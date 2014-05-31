@@ -162,12 +162,14 @@ plot4 <- EU.map +
                        na.value = "lightgrey")
 
 
-# Arrange plots side-by-side and save them to disk
-grid.arrange(plot1, plot3, ncol=2) # Absolute plots: vertical positioning
-ggsave("figs/Turnout 2014.png", width=20, height=10, dpi=72)
+# Arrange plots side-by-side
+arrange1 <- grid.arrange(plot1, plot3, ncol=2) # Absolute plots: vertical positioning
+arrange2 <- grid.arrange(plot2, plot4, ncol=2) # Relative plots: vertical positioning
 
-grid.arrange(plot2, plot4, ncol=2) # Relative plots: vertical positioning
-ggsave("figs/Change in turnout 2009-2014.png", width=20, height=10, dpi=72)
+#ggsave(plot1, path="figs/", width=10, height=10, dpi=72)
+#ggsave(plot2, path="figs/", width=10, height=10, dpi=72)
+#ggsave(plot3, path="figs/", width=10, height=10, dpi=72)
+#ggsave(plot4, path="figs/", width=10, height=10, dpi=72)
 
 # Clean up/ Remove data files
 unlink(c("CNTR_2006_03M_SH.zip", "eurostat/", "ne_10m_admin_0_sovereignty.zip", "naturalearth/"), recursive=TRUE)
