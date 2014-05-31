@@ -162,6 +162,9 @@ plot4 <- EU.map +
                        na.value = "lightgrey")
 
 
-# Arrange plots side-by-side 
+# Arrange plots side-by-side and save them to disk
 grid.arrange(plot1, plot3, ncol=2) # Absolute plots: vertical positioning
+ggsave("figs/Turnout 2014.png", width=1500, heigth=750, dpi=72)
+
 grid.arrange(plot2, plot4, ncol=2) # Relative plots: vertical positioning
+ggsave("figs/Change in turnout 2009-2014.png", width=1500, heigth=750, dpi=72)
