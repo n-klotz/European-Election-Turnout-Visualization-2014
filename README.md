@@ -12,11 +12,10 @@ Basic code to draw the map is the following:
 
 ```
 map <- readShapeSpatial("shapefile/CNTR_RG_60M_2006", proj4string = CRS("+proj=longlat"))
-map <- rename(map, c(CNTR_ID = "iso2"))
 map@data$id <- rownames(map@data)
 map.points <- fortify(map, region = "id")
 map.df <- join(map.points, map@data, by = "id")
-map.df <- join(map.df, turnout, by = "iso2")
+map.df <- join(map.df, turnout, by = "CNTR_ID")
 
 ggplot(map.df) +
   coord_cartesian(xlim = c(-24, 35), ylim = c(34, 72)) + # Coordinates for the EU
