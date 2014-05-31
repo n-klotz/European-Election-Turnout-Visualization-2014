@@ -93,7 +93,9 @@ plot2 <- ggplot(turnout, aes(x=reorder(X, diff78),
 # Based on:
 # - https://github.com/hadley/ggplot2/wiki/plotting-polygon-shapefiles
 # - http://f.briatte.org/teaching/ida/100_maps.html
-# Shapefiles from EuroStat:
+# - http://markuskainu.fi/blog/r-project/2013/11/14/world-values-survey-on-map.html
+# Shapefiles:
+# - http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_sovereignty.zip
 # - http://epp.eurostat.ec.europa.eu/portal/page/portal/gisco_Geographical_information_maps/popups/references/administrative_units_statistical_units_1
 
 map <- readShapeSpatial("shapefile/CNTR_RG_60M_2006", proj4string = CRS("+proj=longlat")) # 2010 shapefiles produced an error?!
@@ -105,6 +107,11 @@ turnout$CNTR_ID <- as.character(turnout$CNTR_ID)
 turnout$CNTR_ID[turnout$CNTR_ID=="EL"] <- "GR"
 turnout$CNTR_ID <- as.factor(turnout$CNTR_ID)
 
+# NaturalEarth Data
+#download.file("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_sovereignty.zip", destfile="ne_10m_admin_0_sovereignty.zip")
+#unzip("ne_10m_admin_0_sovereignty.zip",exdir="./naturalearth")
+#shape <- readShapeSpatial("./naturalearth/ne_10m_admin_0_sovereignty", proj4string = CRS("+proj=longlat")) # CRS("+proj=robin") for Robinson projection
+#shape <- rename(shape, c(ISO_A2 = "CNTR_ID"))
 map.df <- join(map.df, turnout, by = "CNTR_ID")
 
 # Plot skeleton
