@@ -98,10 +98,6 @@ plot2 <- ggplot(turnout, aes(x=reorder(X, diff78),
 # - http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_sovereignty.zip
 # - http://epp.eurostat.ec.europa.eu/portal/page/portal/gisco_Geographical_information_maps/popups/references/administrative_units_statistical_units_1
 
-map <- readShapeSpatial("shapefile/CNTR_RG_60M_2006", proj4string = CRS("+proj=longlat")) # 2010 shapefiles produced an error?!
-map@data$id <- rownames(map@data)
-map.points <- fortify(map, region = "id")
-map.df <- join(map.points, map@data, by = "id")
 # change factor levels that are not ISO2 (Greece!)
 turnout$CNTR_ID <- as.character(turnout$CNTR_ID)
 turnout$CNTR_ID[turnout$CNTR_ID=="EL"] <- "GR"
@@ -112,6 +108,15 @@ turnout$CNTR_ID <- as.factor(turnout$CNTR_ID)
 #unzip("ne_10m_admin_0_sovereignty.zip",exdir="./naturalearth")
 #shape <- readShapeSpatial("./naturalearth/ne_10m_admin_0_sovereignty", proj4string = CRS("+proj=longlat")) # CRS("+proj=robin") for Robinson projection
 #shape <- rename(shape, c(ISO_A2 = "CNTR_ID"))
+
+# Eurostat
+download.file("http://epp.eurostat.ec.europa.eu/cache/GISCO/geodatafiles/CNTR_2006_03M_SH.zip", destfile="CNTR_2006_03M_SH.zip")
+unzip("CNTR_2006_03M_SH.zip",exdir="./eurostat")
+shape <- readShapeSpatial("./eurostat/shape/data/CNTR_RG_03M_2006", proj4string = CRS("+proj=longlat")) # CRS("+proj=robin") for Robinson projection
+
+shape@data$id <- rownames(shape@data)
+shape.points <- fortify(shape, region = "id")
+map.df <- join(shape.points, shape@data, by = "id")
 map.df <- join(map.df, turnout, by = "CNTR_ID")
 
 # Plot skeleton
