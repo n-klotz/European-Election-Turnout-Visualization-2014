@@ -10,7 +10,7 @@ Shapefiles for the maps are provided by [Eurostat](http://epp.eurostat.ec.europa
 
 Basic code to draw the map is the following:
 
-```R
+```
 map <- readShapeSpatial("shapefile/CNTR_RG_60M_2006", proj4string = CRS("+proj=longlat"))
 map <- rename(map, c(CNTR_ID = "iso2"))
 map@data$id <- rownames(map@data)
