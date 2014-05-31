@@ -8,7 +8,7 @@ Coding for drawing the map is based on instructions from [here](http://f.briatte
 
 Shapefiles for the maps are provided by [Eurostat](http://epp.eurostat.ec.europa.eu/portal/page/portal/gisco_Geographical_information_maps/popups/references/administrative_units_statistical_units_1).
 
-```{R}
+```r
 # Initialize map data
 map <- readShapeSpatial("shapefile/CNTR_RG_60M_2006", proj4string = CRS("+proj=longlat"))
 map <- rename(map, c(CNTR_ID = "iso2"))
